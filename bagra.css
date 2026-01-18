@@ -1,0 +1,296 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Courier New", monospace;
+}
+
+body {
+	min-height: 100vh;
+	background: radial-gradient(circle at center, #0a0a0a, #000000);
+	color: #00ff88;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	overflow-x: hidden;
+	position: relative;
+}
+
+/* Scanlines effect */
+body::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		to bottom,
+		transparent 50%,
+		rgba(0, 255, 136, 0.02) 51%
+	);
+	background-size: 100% 4px;
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Noise effect */
+body::after {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("bagra.png");
+	opacity: 0.15;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.container {
+	max-width: 1200px;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	z-index: 2;
+	padding: 40px 20px;
+}
+
+/* Glitch title */
+.glitch {
+	font-size: 48px;
+	font-weight: bold;
+	text-transform: uppercase;
+	position: relative;
+	text-shadow: 0.05em 0 0 #00ff88, -0.03em -0.04em 0 #ff00ff;
+	animation: glitch 725ms infinite;
+	margin-bottom: 40px;
+	letter-spacing: 3px;
+}
+
+.glitch::before,
+.glitch::after {
+	content: attr(data-text);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.glitch::before {
+	animation: glitch 675ms infinite;
+	color: #ff00ff;
+	z-index: -1;
+}
+
+.glitch::after {
+	animation: glitch 333ms infinite;
+	color: #00ffff;
+	z-index: -2;
+}
+
+/* Image container */
+.image-container {
+	position: relative;
+	width: 90%;
+	max-width: 800px;
+	margin: 0 auto 40px;
+	border: 3px solid #00ff88;
+	overflow: hidden;
+	box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+	background: #000;
+}
+
+.cyber-image {
+	width: 100%;
+	height: auto;
+	display: block;
+	filter: sepia(1) hue-rotate(90deg) saturate(2) contrast(1.2);
+	transition: filter 0.5s;
+}
+
+.cyber-image:hover {
+	filter: sepia(0) hue-rotate(0deg) saturate(1) contrast(1);
+}
+
+.image-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		45deg,
+		transparent 0%,
+		rgba(0, 255, 136, 0.1) 50%,
+		transparent 100%
+	);
+	pointer-events: none;
+	animation: overlayScan 4s linear infinite;
+}
+
+.scan-line {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: linear-gradient(to right, transparent, #00ff88, transparent);
+	animation: scan 3s linear infinite;
+	box-shadow: 0 0 10px #00ff88;
+}
+
+/* Terminal info */
+.terminal-info {
+	background: rgba(0, 20, 10, 0.8);
+	border: 2px solid #00ff88;
+	padding: 25px;
+	margin: 30px auto;
+	width: 90%;
+	max-width: 600px;
+	text-align: left;
+	font-size: 18px;
+	line-height: 1.8;
+	box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+	position: relative;
+}
+
+.terminal-info::before {
+	content: ">";
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	color: #00ff88;
+	animation: blink 1s infinite;
+}
+
+.terminal-text {
+	margin-left: 25px;
+	margin-bottom: 10px;
+}
+
+/* Color classes for terminal text */
+.green {
+	color: #00ff88;
+}
+.cyan {
+	color: #00ffff;
+}
+.yellow {
+	color: #ffff00;
+}
+
+/* Cyber button */
+.cyber-button {
+	display: inline-block;
+	padding: 18px 40px;
+	background: transparent;
+	color: #00ff88;
+	border: 2px solid #00ff88;
+	text-decoration: none;
+	font-size: 20px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s;
+	margin-top: 20px;
+}
+
+.cyber-button:hover {
+	background: #00ff88;
+	color: #000;
+	box-shadow: 0 0 30px #00ff88;
+	transform: translateY(-3px);
+}
+
+.cyber-button::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background: rgba(0, 255, 136, 0.1);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	transition: width 0.6s, height 0.6s;
+}
+
+.cyber-button:hover::before {
+	width: 300px;
+	height: 300px;
+}
+
+/* Animations */
+@keyframes glitch {
+	0% {
+		text-shadow: 0.05em 0 0 #00ff88, -0.03em -0.04em 0 #ff00ff;
+	}
+	15% {
+		text-shadow: 0.05em 0 0 #00ff88, -0.03em -0.04em 0 #ff00ff;
+	}
+	16% {
+		text-shadow: -0.05em -0.025em 0 #00ff88, 0.025em 0.035em 0 #ff00ff;
+	}
+	49% {
+		text-shadow: -0.05em -0.025em 0 #00ff88, 0.025em 0.035em 0 #ff00ff;
+	}
+	50% {
+		text-shadow: 0.05em 0.035em 0 #00ff88, 0.03em 0 0 #ff00ff;
+	}
+	99% {
+		text-shadow: 0.05em 0.035em 0 #00ff88, 0.03em 0 0 #ff00ff;
+	}
+	100% {
+		text-shadow: -0.05em 0 0 #00ff88, -0.025em -0.04em 0 #ff00ff;
+	}
+}
+
+@keyframes scan {
+	0% {
+		top: 0;
+	}
+	100% {
+		top: 100%;
+	}
+}
+
+@keyframes overlayScan {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.glitch {
+		font-size: 32px;
+	}
+
+	.terminal-info {
+		font-size: 16px;
+		padding: 20px;
+	}
+
+	.cyber-button {
+		padding: 15px 30px;
+		font-size: 18px;
+	}
+}

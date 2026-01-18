@@ -1,0 +1,77 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Courier New", monospace;
+}
+
+body {
+	height: 100vh;
+	background: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	color: #00ff88;
+	margin: 50px;
+}
+
+/* TERMINAL BOX */
+.terminal {
+	font-size: clamp(28px, 8vw, 90px);
+	white-space: nowrap;
+	text-shadow: 0 0 15px #00ff88;
+	animation: flicker 2s infinite;
+}
+
+/* TYPE EFFECT */
+.text {
+	display: inline-block;
+	overflow: hidden;
+	border-right: 4px solid #00ff88;
+	width: 0;
+	animation: typing 2s steps(14) forwards, blink 1s infinite;
+}
+
+/* SCANLINES */
+body::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: repeating-linear-gradient(
+		to bottom,
+		rgba(255, 255, 255, 0.03),
+		rgba(255, 255, 255, 0.03) 1px,
+		transparent 2px,
+		transparent 4px
+	);
+	pointer-events: none;
+}
+
+/* ANIMATIONS */
+@keyframes typing {
+	from {
+		width: 0;
+	}
+	to {
+		width: 100%;
+	}
+}
+
+@keyframes blink {
+	50% {
+		border-color: transparent;
+	}
+}
+
+@keyframes flicker {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.85;
+	}
+	100% {
+		opacity: 1;
+	}
+}
